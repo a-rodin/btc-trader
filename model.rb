@@ -1,7 +1,7 @@
 class Model
-    IntStart = 0.0
-    IntEnd = 0.1
-    ExecRatioDiff = 1000.0# 0.01
+    IntStart = -0.01
+    IntEnd = 0.11
+    ExecRatioDiff = 0.01
 
     def self.btc_for_ratio(ratio)
         if ratio <= IntStart
