@@ -11,5 +11,5 @@ Depends on following gems:
 
 Setup
 -------
-To set up the script one should set your BTC-e API key and secret in consts.rb.
+To set up the script one should set BTC-e API key and secret in consts.rb.
 
