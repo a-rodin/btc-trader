@@ -84,7 +84,7 @@ function trademodel()
     plot(trading_times, 100*(trading_states / trading_states(1) - 1), '.-');
     grid on;
     title 'Total profit, %';
-    set(gca, 'XTick', trading_times(1):((trading_times(end) - trading_times(1)) / 5):trading_times(end));
+    set(gca, 'XTick', trading_times(1):((trading_times(end) - trading_times(1)) / 10):trading_times(end));
     datetick('x', 'dd.mm', 'keepticks');
     
     subplot(2, 1, 2); 
