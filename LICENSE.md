@@ -7,5 +7,4 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ==========
-The files lib/* are derived from socketio-client library, see https://github.com/lyondhill/socket.io-ruby-client for more info about licensing
-The file lib/web_socket.rb is provided under the new BSD license, author Hiroshi Ichikawa <http://gimite.net/en/>
+The files lib/* are derived from socketio-client library, see <https://github.com/lyondhill/socket.io-ruby-client> for more info about licensing. The file lib/web_socket.rb is provided under the new BSD license, author Hiroshi Ichikawa <http://gimite.net/en/>.
