@@ -3,4 +3,5 @@ function data = load_data
     if isempty(src_data)
         src_data = importdata('pricelog.txt', ' ');
     end
+    data = src_data;
 end
