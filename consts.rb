@@ -1,5 +1,6 @@
 class Consts
     class BtcE
+        # key should have full permissions (info, trade, withdraw)
         Key = "<your key here>"
         Secret = "<your secret here>"
         Commission = 0.002
