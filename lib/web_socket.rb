@@ -39,9 +39,13 @@ class WebSocket
 
         @server = params[:server]
         @socket = arg
-        line = gets().chomp()
+        line = gets()
+        if !line
+          raise(WebSocket::Error, "Client disconnected without sending anything.")
+        end
+        line = line.chomp()
         if !(line =~ /\AGET (\S+) HTTP\/1.1\z/n)
-          raise(WebSocket::Error, "invalid request: #{line}")
+          raise(WebSocket::Error, "Invalid request: #{line}")
         end
         @path = $1
         read_header()
@@ -79,7 +83,7 @@ class WebSocket
         end
 
         @path = (uri.path.empty? ? "/" : uri.path) + (uri.query ? "?" + uri.query : "")
-        host = uri.host + (uri.port == default_port ? "" : ":#{uri.port}")
+        host = uri.host + ((!uri.port || uri.port == default_port) ? "" : ":#{uri.port}")
         origin = params[:origin] || "http://#{uri.host}"
         key1 = generate_key()
         key2 = generate_key()
@@ -300,10 +304,16 @@ class WebSocket
         @header[$1] = $2
         @header[$1.downcase()] = $2
       end
+      if !@header["upgrade"]
+        raise(WebSocket::Error, "Upgrade header is missing")
+      end
       if !(@header["upgrade"] =~ /\AWebSocket\z/i)
         raise(WebSocket::Error, "invalid Upgrade: " + @header["upgrade"])
       end
-      if !(@header["connection"] =~ /\AUpgrade\z/i)
+      if !@header["connection"]
+        raise(WebSocket::Error, "Connection header is missing")
+      end
+      if @header["connection"].split(/,/).grep(/\A\s*Upgrade\s*\z/i).empty?
         raise(WebSocket::Error, "invalid Connection: " + @header["connection"])
       end
     end
@@ -425,5 +435,6 @@ class WebSocket
       ssl_socket.connect()
       return ssl_socket
     end
-
 end
+
+

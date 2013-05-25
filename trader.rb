@@ -7,31 +7,34 @@ require_relative 'log'
 
 class Trader
     def self.process mtgox_ticker, btce_ticker
-        @@ticker = btce_ticker
-        if @@first_time
-            update_funds
-            @@first_time = false
-            return
-        end
-        State.btc_max = btc_max
+        begin
+            @@ticker = btce_ticker
+            if @@first_time
+                update_funds
+                @@first_time = false
+                return
+            end
+            State.btc_max = btc_max
 
-        check_order
+            check_order
 
-        ratio = Math.log(mtgox_ticker.sell) - Math.log(btce_ticker.buy)
-        expected_btc = Model.btc_for_ratio(ratio) * State.btc_max
-        diff = expected_btc - State.btc_amount
-
-        if ! diff.to_f.nan? && diff > 0.01 && (ratio - State.last_sell_ratio).abs >= Model::ExecRatioDiff
-            State.last_buy_ratio = ratio
-            trade(expected_btc)
-        else
-            ratio = Math.log(mtgox_ticker.buy) - Math.log(btce_ticker.sell)
+            ratio = Math.log(mtgox_ticker.sell) - Math.log(btce_ticker.buy)
             expected_btc = Model.btc_for_ratio(ratio) * State.btc_max
             diff = expected_btc - State.btc_amount
-            if ! diff.to_f.nan? && diff < -0.01 && (ratio - State.last_buy_ratio).abs >= Model::ExecRatioDiff
-                State.last_sell_ratio = ratio
+
+            if ! diff.to_f.nan? && diff > 0.01 && (ratio - State.last_sell_ratio).abs >= Model::ExecRatioDiff
+                State.last_buy_ratio = ratio
                 trade(expected_btc)
+            else
+                ratio = Math.log(mtgox_ticker.buy) - Math.log(btce_ticker.sell)
+                expected_btc = Model.btc_for_ratio(ratio) * State.btc_max
+                diff = expected_btc - State.btc_amount
+                if ! diff.to_f.nan? && diff < -0.01 && (ratio - State.last_buy_ratio).abs >= Model::ExecRatioDiff
+                    State.last_sell_ratio = ratio
+                    trade(expected_btc)
+                end
             end
+        rescue
         end
     end
 
