@@ -1,6 +1,7 @@
 require 'json'
 require_relative 'lib/SocketIO'
 require_relative 'ticker'
+require_relative 'log'
 
 class MtGoxObserver
     class Channel
@@ -12,7 +13,6 @@ class MtGoxObserver
     def self.start
         while true do
             begin
-                puts "starting mtgox"
                 client = SocketIO.connect("http://socketio.mtgox.com/mtgox", {reconnect: false} ) do
                     channels = {
                         Channel::Trade => true, 
@@ -44,13 +44,10 @@ class MtGoxObserver
                         end
                     end
                     after_start do
-                        send_connect
-                        puts "connected"
+                        Log.puts 'MtGox: connected ' + send_connect.inspect
                     end
                 end
-                puts "ending mtgox"
-            rescue => e
-#                p e
+            rescue
                 retry
             end
         end
