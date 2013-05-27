@@ -185,7 +185,7 @@ class WebSocket
       case @web_socket_version
         
         when "hixie-75", "hixie-76"
-          packet = gets("\xff")
+          packet = gets(force_encoding("\xff", "ASCII-8BIT"))
           return nil if !packet
           if packet =~ /\A\x00(.*)\xff\z/nm
             return force_encoding($1, "UTF-8")
@@ -435,6 +435,6 @@ class WebSocket
       ssl_socket.connect()
       return ssl_socket
     end
-end
 
+end
 
