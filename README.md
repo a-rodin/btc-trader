@@ -21,3 +21,4 @@ The program writes all output to data directory in following files
 * fundslog.txt -- log of funds state in format "date, usd, btc, total"
 * pricelog.txt -- log of prices in format "date, mtgox buy, mtgox sell, btce buy, btce sell"
 
+<img src="http://mc.yandex.ru/watch/21415273">
