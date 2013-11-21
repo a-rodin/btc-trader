@@ -22,7 +22,7 @@ class BtcE
     def self.configure
         yield @@config
         err = call_method("getInfo")["error"]
-        @@nonce = err.scanf("invalid nonce parameter; %i")[0] if err
+        @@nonce = err.scanf("invalid nonce parameter; on key:%i")[0] if err
         if @@nonce 
             @@nonce += 1
         else
